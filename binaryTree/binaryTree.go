@@ -2,107 +2,111 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 )
 
-// it should be generic
-type Node[T comparable] struct {
-	Value T
-	Left  *Node[T]
-	Right *Node[T]
+type Node struct {
+	Left  *Node
+	Right *Node
+	Value int
+}
+type BinaryTree struct {
+	root *Node
 }
 
-func (n *Node[T]) BuildTree(root *Node[T], data T, zero T) *Node[T] {
-	// take input from user
-
-	// Since T is a generic type, we can't directly compare with nil
-	// Instead, we'll return a new node with the scanned value
-
-	if data == zero {
-		return &Node[T]{Value: data, Left: nil, Right: nil}
+func NewTree(value int) *Node {
+	if value == 0 {
+		return nil
 	}
-	node := &Node[T]{Value: data, Left: nil, Right: nil}
-
-	fmt.Println("Enter the value of the left node")
-	var value T
-	fmt.Scanln(&value)
-	node.Left = n.BuildTree(node.Left, value, zero)
-
-	fmt.Println("Enter the value of the right node")
-	fmt.Scanln(&value)
-	node.Right = n.BuildTree(node.Right, value, zero)
-
-	return node
+	root := &Node{Left: nil, Right: nil, Value: value}
+	root.Left = NewTree(value - 1)
+	root.Right = NewTree(value - 1)
+	return root
 }
 
-func (n *Node[T]) Delete(value T) *Node[T] {
-	return nil
+// root,left and right
+func PreOrderTraversal(root *Node) {
+	if root == nil {
+		return
+	}
+	fmt.Println(root.Value)
+	PreOrderTraversal(root.Left)
+	PreOrderTraversal(root.Right)
 }
 
-func (n *Node[T]) LevelOrderTraversal(root *Node[T]) {
-	// take a queue
-	queue := []*Node[T]{}
+func InOrderTraversal(root *Node) {
+	if root == nil {
+		return
+	}
+	PreOrderTraversal(root.Left)
+	fmt.Println(root.Value)
+	PreOrderTraversal(root.Right)
+}
+
+func PostOrderTraversal(root *Node) {
+	if root == nil {
+		return
+	}
+	PreOrderTraversal(root.Left)
+	PreOrderTraversal(root.Right)
+	fmt.Println(root.Value)
+}
+
+//	3
+//
+// 2  2
+// push root
+// print
+// pop
+// check if queue has something if no print new line
+// else
+// push left if exists
+// push right if exists
+
+// [3]
+// print and remove
+// nothing in queue
+// new line
+// [2,3,]
+// 2
+
+func LevelOrderTraversal(root *Node) {
+	queue := []*Node{}
 	queue = append(queue, root)
 	queue = append(queue, nil)
+	// we need an identifier to tell us hey this level is completed,
+	// please move to next level
+	// this identifier will be reached only after all the levels in the current level has been
+	// completed
+	// in other words
+	// it will be the last node in a level(just an identifier)
+	// so i was thinking about to add an identifier
+	// so i was right, i was close, i can doit
 
 	for len(queue) > 0 {
-		node := queue[0]
+		temp := queue[0]
 		queue = queue[1:]
-		if node == nil {
+		if temp == nil {
 			fmt.Println("\n", "")
-			// if queue is has, append nil
 			if len(queue) > 0 {
 				queue = append(queue, nil)
 			}
 		} else {
-			fmt.Printf("%v ", node.Value)
+			fmt.Printf(strconv.Itoa(temp.Value) + " ")
 
-			if node.Left != nil {
-				queue = append(queue, node.Left)
+			if temp.Left != nil {
+				queue = append(queue, temp.Left)
 			}
-			if node.Right != nil {
-				queue = append(queue, node.Right)
+			if temp.Right != nil {
+				queue = append(queue, temp.Right)
 			}
 		}
+
 	}
-
-}
-
-func (n *Node[T]) InOrderTraversal(root *Node[T]) {
-	// l n r
-	if root == nil {
-		return
-	}
-	n.InOrderTraversal(root.Left)
-	fmt.Println(root.Value)
-	n.InOrderTraversal(root.Right)
-
-}
-
-func (n *Node[T]) PreOrderTraversal(root *Node[T]) {
-	// n l r
-	if root == nil {
-		return
-	}
-	fmt.Println(root.Value)
-	n.PreOrderTraversal(root.Left)
-	n.PreOrderTraversal(root.Right)
-
-}
-
-func (n *Node[T]) PostOrderTraversal(root *Node[T]) {
-	// l r n
-	if root == nil {
-		return
-	}
-	n.PostOrderTraversal(root.Left)
-	n.PostOrderTraversal(root.Right)
-	fmt.Println(root.Value)
-
 }
 
 func main() {
-	tree := &Node[int]{}
-	root := tree.BuildTree(nil, 10, -1)
-	tree.LevelOrderTraversal(root)
-	fmt.Println("Hello world")
+	fmt.Println("<------------Function starts here-------------->")
+	tree := NewTree(3)
+	LevelOrderTraversal(tree)
 }
