@@ -48,7 +48,7 @@ func (n *Node[T]) LevelOrderTraversal(root *Node[T]) {
 		node := queue[0]
 		queue = queue[1:]
 		if node == nil {
-			fmt.Println("\n")
+			fmt.Println("\n", "")
 			// if queue is has, append nil
 			if len(queue) > 0 {
 				queue = append(queue, nil)
@@ -104,4 +104,5 @@ func main() {
 	tree := &Node[int]{}
 	root := tree.BuildTree(nil, 10, -1)
 	tree.LevelOrderTraversal(root)
+	fmt.Println("Hello world")
 }
