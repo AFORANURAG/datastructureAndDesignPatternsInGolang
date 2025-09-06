@@ -5,27 +5,24 @@ import (
 	"strconv"
 )
 
-type Node struct {
-	Left  *Node
-	Right *Node
+type TreeNode struct {
+	Left  *TreeNode
+	Right *TreeNode
 	Value int
 }
-type BinaryTree struct {
-	root *Node
-}
 
-func NewTree(value int) *Node {
+func NewTree(value int) *TreeNode {
 	if value == 0 {
 		return nil
 	}
-	root := &Node{Left: nil, Right: nil, Value: value}
+	root := &TreeNode{Left: nil, Right: nil, Value: value}
 	root.Left = NewTree(value - 1)
 	root.Right = NewTree(value - 1)
 	return root
 }
 
 // root,left and right
-func PreOrderTraversal(root *Node) {
+func PreOrderTraversal(root *TreeNode) {
 	if root == nil {
 		return
 	}
@@ -34,7 +31,7 @@ func PreOrderTraversal(root *Node) {
 	PreOrderTraversal(root.Right)
 }
 
-func InOrderTraversal(root *Node) {
+func InOrderTraversal(root *TreeNode) {
 	if root == nil {
 		return
 	}
@@ -43,7 +40,7 @@ func InOrderTraversal(root *Node) {
 	PreOrderTraversal(root.Right)
 }
 
-func PostOrderTraversal(root *Node) {
+func PostOrderTraversal(root *TreeNode) {
 	if root == nil {
 		return
 	}
@@ -70,8 +67,8 @@ func PostOrderTraversal(root *Node) {
 // [2,3,]
 // 2
 
-func LevelOrderTraversal(root *Node) {
-	queue := []*Node{}
+func LevelOrderTraversal(root *TreeNode) {
+	queue := []*TreeNode{}
 	queue = append(queue, root)
 	queue = append(queue, nil)
 	// we need an identifier to tell us hey this level is completed,
@@ -79,7 +76,7 @@ func LevelOrderTraversal(root *Node) {
 	// this identifier will be reached only after all the levels in the current level has been
 	// completed
 	// in other words
-	// it will be the last node in a level(just an identifier)
+	// it will be the last TreeNode in a level(just an identifier)
 	// so i was thinking about to add an identifier
 	// so i was right, i was close, i can doit
 
@@ -108,5 +105,6 @@ func LevelOrderTraversal(root *Node) {
 func main() {
 	fmt.Println("<------------Function starts here-------------->")
 	tree := NewTree(3)
-	LevelOrderTraversal(tree)
+	levelOrderValues := LevelOrder(tree)
+	fmt.Println("levelOrderValues are", levelOrderValues)
 }
