@@ -35,9 +35,9 @@ func InOrderTraversal(root *TreeNode) {
 	if root == nil {
 		return
 	}
-	PreOrderTraversal(root.Left)
+	InOrderTraversal(root.Left)
 	fmt.Println(root.Value)
-	PreOrderTraversal(root.Right)
+	InOrderTraversal(root.Right)
 }
 
 func PostOrderTraversal(root *TreeNode) {
@@ -104,7 +104,19 @@ func LevelOrderTraversal(root *TreeNode) {
 
 func main() {
 	fmt.Println("<------------Function starts here-------------->")
-	tree := NewTree(3)
-	levelOrderValues := LevelOrder(tree)
-	fmt.Println("levelOrderValues are", levelOrderValues)
+	// tree := NewTree(3)
+	// levelOrderValues := LevelOrder(tree)
+	// fmt.Println("levelOrderValues are", levelOrderValues)
+	// create a bst
+	n := &TreeNode{Value: 10}
+	n.Left = &TreeNode{Value: 5}
+	n.Left.Left = &TreeNode{Value: 2}
+	n.Left.Right = &TreeNode{Value: 7}
+	n.Right = &TreeNode{Value: 15}
+	n.Right.Left = &TreeNode{Value: 12}
+	n.Right.Right = &TreeNode{Value: 17}
+	// predecessor := InOrderPredecessor(n, 15)
+	InOrderTraversal(n)
+	// fmt.Println("predecessor is", predecessor.Value)
+
 }

@@ -38,3 +38,19 @@ func main() {
 		count++
 	}
 }
+
+
+
+package main
+
+import (
+	"fmt"
+)
+
+// Node structure
+type Node struct {
+	data  int
+	left  *Node
+	right *Node
+}
+
