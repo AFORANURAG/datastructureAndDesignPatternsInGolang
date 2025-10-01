@@ -1,5 +1,17 @@
 package main
 
+// Predecessor → largest value smaller than key
+
+// If node has left subtree → rightmost in left subtree.
+
+// Else → climb ancestors until we find a node smaller than key.
+
+// Successor → smallest value greater than key
+
+// If node has right subtree → leftmost in right subtree.
+
+// Else → climb ancestors until we find a node greater than key.
+
 // Insert into BST
 func insert(root *TreeNode, key int) *TreeNode {
 	if root == nil {
