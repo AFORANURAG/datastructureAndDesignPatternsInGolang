@@ -29,6 +29,8 @@ func (h *MaxHeap) Pop() int {
 	h.siftDown(0)
 	return root
 }
+
+// This is equivalent to heap.Fix in the standard library.
 func (h *MaxHeap) Update(i int, newVal int) {
 	val := h.Arr[i]
 	h.Arr[i] = newVal
